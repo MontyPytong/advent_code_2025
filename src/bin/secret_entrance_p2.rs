@@ -5,20 +5,27 @@ const LEFT: &str = "L";
 const RIGHT: &str = "R";
 
 fn main() {
-    if let Ok(lines) = read_lines("src/input/d1.txt") {
+    if let Ok(lines) = read_lines("src/input/d1_p2.txt") {
         let mut dial: i32 = 50;
         let mut left_zero: i32 = 0;
+        // Consumes the iterator, returns an (Optional) String
         for line in lines.map_while(Result::ok) {
             //parse the value
             let (index, count) = line.split_at(1);
             let mut value = count.parse::<i32>().unwrap();
+            //if it passes 0 when rotate to L or R count++
             match index {
                 LEFT => {
                     if value > 100 {
+                        let add_to_count = value / 100;
+                        left_zero += add_to_count;
                         value = value % 100;
                     }
                     let dif = dial - value;
                     if dif < 0 {
+                        if dial != 0 {
+                            left_zero += 1;
+                        }
                         dial = 100 + dif
                     } else {
                         dial -= value;
@@ -34,10 +41,13 @@ fn main() {
                 }
                 RIGHT => {
                     if value > 100 {
+                        let add_to_count = value / 100;
+                        left_zero += add_to_count;
                         value = value % 100;
                     }
                     let dif = dial + value;
                     if dif > 100 {
+                        left_zero += 1;
                         dial = dif % 100
                     } else {
                         dial = dif

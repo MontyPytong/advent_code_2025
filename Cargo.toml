@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+
+[[bin]]
+name = "secret_entrance"
+path = "src/bin/secret_entrance.rs"
+
+
+[[bin]]
+name = "secret_entrance_p2"
+path = "src/bin/secret_entrance_p2.rs"
